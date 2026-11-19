@@ -1,0 +1,468 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+
+// All CV content lives in this block. Edit the text here and the page updates.
+
+const name = 'Meghan Hale';
+const tagline = 'Climate & Sustainability Analyst | Climate Risk | GIS | Project Management';
+const email = 'meghan@alaiyacollective.com';
+const linkedin = 'https://www.linkedin.com/in/meghan-hale/';
+
+
+const summary =
+	'Climate & sustainability professional with experience applying data analysis, EO, environmental policy evaluation, and stakeholder engagement to complex policy and environmental challenges. My work blends quantitative and qualitative analysis with visualization to inform evidence-based recommendations: mapping climate risks, evaluating policy impacts, and helping stakeholders understand how local dynamics shape real-world systems. Strong technical writing, research, project management and communication skills to integrate cross-sector perspectives and support systems-level thinking.';
+
+const skills = [
+	{ label: 'Spatial', items: 'ArcGIS, GEE, QGIS, GeoAI, GDAL, rasterio, Landsat/Sentinel' },
+	{ label: 'Programming', items: 'GitHub, Jupyter, Python, SQL' },
+	{ label: 'Quantitative', items: 'Excel, R, SPSS, Stata' },
+	{ label: 'Qualitative', items: 'SurveyCTO, grant writing, policy briefs, literature review, research design/reporting' },
+	{ label: 'Communication', items: 'Adobe Suite, Google Workspace, Microsoft Office Suite' },
+	{ label: 'Project management', items: 'Certification in progress' },
+];
+
+// Independent contracting is one role with several projects under it.
+const contracting = {
+	dates: 'Nov 2022 – Present',
+	role: 'Independent Contractor',
+	intro:
+		'Conducting applied research, data analysis, EO, and project management across climate policy, circular economy, and sustainable development for NGOs, private organizations, and government partners such as UNICEF, WRI, Strava, Nepalaya, Ifraj Zanzibar Foundation, and Pass Net Zero amongst others.',
+	projects: [
+		{
+			title: 'Nepalaya: Circular Waste Management Pilot',
+			meta: 'Nepal, ongoing',
+			points: [
+				'Designing a $120K pilot for decentralized waste management across 6 alpine communities in Nepal, defining project scope, timeline and budget.',
+				'Leading fundraising for the pilot, with 4 proposals submitted and 3 more in preparation, and designing the impact evaluation framework to measure MSW outcomes.',
+				'Building partnerships with local partners, including municipal offices, community youth groups, and NGOs, to plan implementation.',
+			],
+		},
+		{
+			title: 'World Resources Institute (WRI): National Circular Economy Roadmap',
+			meta: 'Mexico, Jan–June 2025',
+			points: [
+				'Conducted remote sensing and GIS analysis (ArcGIS, GEE, Python) to map informal waste infrastructure across rural localities in Mexico, producing policy recommendations for INECC and private-sector stakeholders on circular economy and decarbonization.',
+				'Analyzed circular economy policy initiatives across 12 countries, evaluating GHG reduction potential, financial and political feasibility, and infrastructure requirements to identify replicable policy frameworks for Mexico’s national context, consolidated into a formal policy landscape analysis.',
+			],
+		},
+		{
+			title: 'Rocky Mountain Environmental Consulting: UNICEF CLAC Reports',
+			meta: 'Global, ongoing',
+			points: [
+				'Collaborated with UNICEF to develop Climate Landscape Analyses for Children (CLACs) across multiple countries including Malawi, Libya, Kosovo, and Moldova, conducting GIS-based climate and health risk mapping using ArcGIS, QGIS, and Python to identify vulnerability hot-spots across subnational contexts.',
+				'Produced socioeconomic and climate vulnerability mappings, performed statistical analysis, and contributed technical writing to country-level CLAC reports for government stakeholders informing climate resilience and sustainability planning.',
+			],
+		},
+		{
+			title: 'PSD Nepal: Waste Management Research in Remote Alpine Communities',
+			meta: 'Nepal, Oct 2023 – Aug 2024',
+			points: [
+				'Managed a research project from scoping through delivery, including IRB-approved survey design, fieldwork planning and structured data management across 4 months.',
+				'Coordinated and conducted 50+ stakeholder interviews across 14 Himalayan tourist hubs, handling scheduling, logistics and data quality in the field.',
+				'Secured funding from 3 of 5 grant applications to finance the project.',
+				'Delivered recommendations on sustainable waste management to the Nepalese Parks Department by end of project.',
+			],
+		},
+	],
+};
+
+const otherRoles = [
+	{
+		dates: 'Jan 2025 – Aug 2025',
+		role: 'Graduate Student Researcher',
+		org: 'UC Berkeley',
+		place: 'Berkeley, CA, USA',
+		points: [
+			'Researched lettuce supply chains and market dynamics in California’s Central Valley under Prof. David Zilberman, analyzing production, pricing, and distribution trends across the agricultural sector.',
+			'Led 30+ stakeholder interviews (farmers, distributors, industry experts) and analyzed economic datasets in R to identify supply chain disruptions and climate-related trends, contributing to a comprehensive report on structural shifts in U.S. lettuce markets.',
+		],
+	},
+	{
+		dates: 'Jan 2021 – Nov 2022',
+		role: 'Senior Healthcare Analyst',
+		org: 'Springhill Consulting Group',
+		place: 'Chicago, IL, USA',
+		points: [
+			'Analyzed market trends across global health sectors (e.g., women’s reproductive health, surgical care) to inform client business strategy and market entry decisions.',
+			'Delivered stakeholder insights, SWOT analyses, financial benchmarking, and policy recommendations to support client decision-making.',
+			'Managed 3–4 concurrent projects with teams of 4–8, overseeing stakeholder interviews, data synthesis, and deliverable timelines.',
+		],
+	},
+	{
+		dates: 'May 2018 – Aug 2018',
+		role: 'Marketing and Development Intern',
+		org: 'Logi Analytics',
+		place: 'McLean, Virginia, USA',
+		points: [
+			'Developed and executed REST API performance tests to diagnose latency issues in an analytical application, using JSON and SQL Server to structure and validate test queries.',
+			'Presented testing framework and findings to Engineering and Product teams to inform potential product improvements.',
+		],
+	},
+];
+
+const education = [
+	{
+		dates: '2025',
+		degree: 'M.S. in Sustainable Development',
+		school: 'University of California, Berkeley, Goldman School of Public Policy',
+		place: 'Berkeley, CA, USA',
+	},
+	{
+		dates: '2020',
+		degree: 'B.S. in Architecture & Design Thinking, Global Sustainability Minor',
+		school: 'University of Virginia, School of Architecture',
+		place: 'Charlottesville, VA, USA',
+	},
+];
+
+const publications = [
+	{
+		citation: 'Hale, M. Mexico’s Transition to a Circular Economy: Policy Landscape Analysis. Manuscript in preparation, 2025.',
+	},
+	{
+		citation:
+			'Hale, Meghan and David Zilberman. 2026. “Cyclospora and Lettuce: Impacts Across the Supply Chain.” ARE Update 30(1): 1–4. University of California, Giannini Foundation of Agricultural Economics. 2025.',
+	},
+	{
+		citation: 'UNICEF. A Climate Landscape Analysis for Children in Kosovo. 2024.',
+		note: 'Contributor: GIS and data consulting and background research',
+	},
+	{
+		citation: 'UNICEF. A Climate Landscape Analysis for Children in Moldova. 2023.',
+		note: 'Contributor: GIS and data consulting and background research',
+	},
+];
+
+const languages = 'English, Spanish, French, Italian';
+
+const interests = [
+	'Co-founder, women’s travel community focused on confidence-building & friendship',
+	'Boston Marathon finisher',
+	'Personal running coach',
+	'Videography & film photography',
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`CV | ${name}`} description={`CV for ${name}, Alaiya Development Collective`} />
+	</head>
+	<body>
+		<Header />
+		<main class="cv">
+			<section class="top">
+				<div class="id">
+					<h1>{name}</h1>
+					<p class="tagline">{tagline}</p>
+					<ul class="links">
+						<li><a href={`mailto:${email}`}>{email}</a></li>
+						{linkedin && <li><a href={linkedin} target="_blank" rel="noopener">LinkedIn</a></li>}
+					</ul>
+				</div>
+				<div class="sum">
+					<h2>Summary</h2>
+					<p class="summary">{summary}</p>
+				</div>
+			</section>
+
+			<div class="content">
+				<section>
+					<h2>Skills</h2>
+					<div class="skills">
+						{skills.map((group) => (
+							<div class="skill">
+								<p class="dates">{group.label}</p>
+								<p class="items">{group.items}</p>
+							</div>
+						))}
+					</div>
+				</section>
+
+				<section>
+					<h2>Work experience</h2>
+
+					<article class="entry">
+						<p class="dates">{contracting.dates}</p>
+						<div>
+							<h3>{contracting.role}</h3>
+							<p class="intro">{contracting.intro}</p>
+							<div class="projects">
+								{contracting.projects.map((project) => (
+									<div class="project">
+										<h4>{project.title}</h4>
+										<p class="meta">{project.meta}</p>
+										<ul>
+											{project.points.map((point) => <li>{point}</li>)}
+										</ul>
+									</div>
+								))}
+							</div>
+						</div>
+					</article>
+
+					{otherRoles.map((job) => (
+						<article class="entry">
+							<p class="dates">{job.dates}</p>
+							<div>
+								<h3>{job.role}</h3>
+								<p class="org">{job.org}, {job.place}</p>
+								<ul>
+									{job.points.map((point) => <li>{point}</li>)}
+								</ul>
+							</div>
+						</article>
+					))}
+				</section>
+
+				<section>
+					<h2>Education</h2>
+					<div class="edu-grid">
+						{education.map((ed) => (
+							<div class="edu">
+								<p class="dates">{ed.dates}</p>
+								<h3>{ed.degree}</h3>
+								<p class="org">{ed.school}, {ed.place}</p>
+							</div>
+						))}
+					</div>
+				</section>
+
+				<section>
+					<h2>Publications &amp; reports</h2>
+					<ul class="pubs">
+						{publications.map((pub) => (
+							<li>
+								<p>{pub.citation}</p>
+								{pub.note && <p class="note">{pub.note}</p>}
+							</li>
+						))}
+					</ul>
+				</section>
+
+				<div class="two-col">
+					<section>
+						<h2>Languages</h2>
+						<p class="items">{languages}</p>
+					</section>
+					<section>
+						<h2>Personal achievements &amp; interests</h2>
+						<ul class="plain">
+							{interests.map((item) => <li>{item}</li>)}
+						</ul>
+					</section>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>
+
+<style>
+	:global(html),
+	:global(body) {
+		margin: 0;
+		padding: 0;
+		background: white;
+		color: #111;
+		font-family: 'Inter', sans-serif;
+	}
+
+	.cv {
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 3rem 3rem 5rem;
+		box-sizing: border-box;
+	}
+
+	/* Top block: name on the left, summary on the right */
+	.top {
+		display: grid;
+		grid-template-columns: minmax(240px, 1fr) minmax(0, 1.8fr);
+		gap: 4rem;
+		margin-bottom: 3.5rem;
+	}
+	.id h1 {
+		font-size: clamp(1.8rem, 3vw, 2.6rem);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.1;
+		margin: 0 0 1rem;
+	}
+	.tagline {
+		font-size: 0.9rem;
+		line-height: 1.5;
+		margin: 0 0 1.25rem;
+	}
+	.links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: 0.85rem;
+		line-height: 1.8;
+	}
+	.links a {
+		color: #111;
+	}
+	.summary {
+		font-size: 0.95rem;
+		line-height: 1.65;
+		margin: 0;
+	}
+
+	h2 {
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		margin: 0 0 1rem;
+		padding-bottom: 0.6rem;
+		border-bottom: 1px solid #111;
+	}
+	.content section {
+		margin-bottom: 3rem;
+	}
+
+	/* Skills in three columns */
+	.skills {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.5rem 2.5rem;
+	}
+	.skill .dates {
+		margin-bottom: 0.25rem;
+	}
+	.items {
+		font-size: 0.9rem;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	/* Work experience runs the full width */
+	.entry {
+		display: grid;
+		grid-template-columns: 9rem minmax(0, 1fr);
+		gap: 1.5rem;
+		padding: 0.9rem 0 1.25rem;
+	}
+	.dates {
+		font-size: 0.8rem;
+		line-height: 1.5;
+		color: #555;
+		margin: 0;
+	}
+	.entry h3,
+	.edu h3 {
+		font-size: 1rem;
+		font-weight: 600;
+		margin: 0 0 0.15rem;
+	}
+	.org {
+		font-size: 0.85rem;
+		color: #304334;
+		margin: 0 0 0.6rem;
+	}
+	.intro {
+		font-size: 0.9rem;
+		line-height: 1.6;
+		margin: 0;
+	}
+	.entry ul {
+		margin: 0;
+		padding-left: 1.1rem;
+	}
+	.entry li {
+		font-size: 0.9rem;
+		line-height: 1.55;
+		margin-bottom: 0.3rem;
+	}
+
+	/* Projects under Independent Contractor, two across */
+	.projects {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.5rem 3rem;
+		margin-top: 1.4rem;
+	}
+	.project h4 {
+		font-size: 0.9rem;
+		font-weight: 600;
+		margin: 0;
+		color: #304334;
+	}
+	.meta {
+		font-size: 0.8rem;
+		color: #555;
+		margin: 0.1rem 0 0.5rem;
+	}
+
+	/* Education side by side */
+	.edu-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.5rem 3rem;
+	}
+	.edu .dates {
+		margin-bottom: 0.25rem;
+	}
+
+	.pubs {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.pubs li {
+		margin-bottom: 0.9rem;
+	}
+	.pubs p {
+		font-size: 0.9rem;
+		line-height: 1.5;
+		margin: 0;
+	}
+	.pubs .note {
+		font-size: 0.8rem;
+		color: #555;
+		margin-top: 0.15rem;
+	}
+
+	/* Languages and interests side by side */
+	.two-col {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0 3rem;
+	}
+	.plain {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: 0.9rem;
+		line-height: 1.7;
+	}
+
+	@media (max-width: 900px) {
+		.top {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+		.skills {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.projects {
+			grid-template-columns: 1fr;
+		}
+	}
+	@media (max-width: 700px) {
+		.cv {
+			padding: 2rem 1.25rem 4rem;
+		}
+		.skills,
+		.edu-grid,
+		.two-col {
+			grid-template-columns: 1fr;
+		}
+		.entry {
+			grid-template-columns: 1fr;
+			gap: 0.25rem;
+		}
+	}
+</style>

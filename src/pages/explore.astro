@@ -1,0 +1,420 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="Alaiya Development Collective" description="Alaiya Development Collective" />
+	</head>
+	<body>
+		<div class="shell">
+			<Header />
+			<main class="stage">
+				<div class="photo-cell" style="background-image: url('/explore-1.jpg');"></div>
+				<div class="photo-cell" style="background-image: url('/explore-2.jpg');"></div>
+				<div class="photo-cell" style="background-image: url('/explore-3.jpg');"></div>
+				<div class="photo-cell" style="background-image: url('/explore-4.jpg');"></div>
+				<div class="photo-cell" style="background-image: url('/explore-5.jpg');"></div>
+
+				<div class="side-text">
+					<p class="kicker">ALAIYA DEVELOPMENT COLLECTIVE</p>
+					<h2>Research, data, and maps for people working on climate and development.</h2>
+					<p class="body">Contributing to projects globally.</p>
+				</div>
+			</main>
+		</div>
+
+		<button id="plus" class="plus" aria-label="Open menu" aria-expanded="false">+</button>
+		<nav id="menu" class="menu">
+			<a href="/explore#about" data-panel="about">ABOUT</a>
+            <a href="/explore#projects" data-panel="projects">PROJECTS</a>
+            <a href="/explore#contact" data-panel="contact">CONTACT</a>
+			<a href="/map">PROJECT MAP</a>
+			<a href="/cv">CV</a>
+			<a href="https://www.youtube.com/@alaiyacollective" target="_blank" rel="noopener">YOUTUBE</a>
+			<a href="mailto:hello@alaiyacollective.com">EMAIL</a>
+		</nav>
+
+		<div id="backdrop" class="backdrop"></div>
+
+		<aside id="panel-about" class="panel">
+			<button class="panel-close" aria-label="Close">&times;</button>
+			<div class="photo" style="background-image: url('/me.png');"></div>
+			<p>I’m a freelance contractor with 10 years of experience across climate and development.
+            I started Alaiya Collective as a way to bring together my experience in data, research,
+            policy, and communications. </p>
+            <p>My background spans architecture, international economics and policy, climate and energy sustainability, and GIS data analysis.
+            My work spans everything from GIS visualizations of survey data to video editing and environmental policy analysis. 
+            I specialize in circular economy and waste systems, with a particular interest in understanding alpine waste management relationships.
+            On the side, I enjoy experimenting with film photography, visual story-telling and marathoning.</p> 
+            <p>Feel free to drop me a line if any of my work sparks an interest! </p>
+			<a href="/cv" class="box">VIEW MY CV</a>
+		</aside>
+
+		<aside id="panel-projects" class="panel">
+			<button class="panel-close" aria-label="Close">&times;</button>
+			<p>Research, data, and mapping work across climate, sustainability, and international development. The map shows where I've worked and what I did there.</p>
+			<a href="/map" class="box">OPEN THE MAP</a>
+		</aside>
+
+		<aside id="panel-contact" class="panel">
+	<button class="panel-close" aria-label="Close">&times;</button>
+	<p>Working on something in climate, sustainability, or development? Tell me a bit about it and I'll get back to you.</p>
+
+	<form id="contact-form" class="form">
+		<input type="hidden" name="access_key" value="4bc5d65e-3f21-48f2-b86a-41c351cfed71" />
+		<input type="hidden" name="subject" value="New message from alaiyacollective.com" />
+		<input type="hidden" name="from_name" value="Alaiya Development Collective website" />
+		<input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+
+		<label>YOUR NAME<input type="text" name="name" required /></label>
+		<label>YOUR EMAIL<input type="email" name="email" required /></label>
+		<label>MESSAGE<textarea name="message" rows="5" required></textarea></label>
+
+		<button type="submit" class="box" id="send">SEND</button>
+		<p id="form-status" class="status" role="status"></p>
+	</form>
+
+	<p class="alt">Prefer email? <a href="mailto:meghan@alaiyacollective.com" class="inline">meghan@alaiyacollective.com</a></p>
+</aside>
+
+		<script>
+			const panels = document.querySelectorAll('.panel');
+			const backdrop = document.getElementById('backdrop');
+			const menu = document.getElementById('menu');
+			const plus = document.getElementById('plus');
+
+			function closeMenu() {
+				menu.classList.remove('open');
+				plus.textContent = '+';
+				plus.setAttribute('aria-expanded', 'false');
+			}
+			function closeAll() {
+				panels.forEach((p) => p.classList.remove('open'));
+				backdrop.classList.remove('show');
+			}
+			function openPanel(name) {
+				closeAll();
+				closeMenu();
+				const p = document.getElementById('panel-' + name);
+				if (p) {
+					p.classList.add('open');
+					backdrop.classList.add('show');
+				}
+			}
+
+			document.querySelectorAll('[data-panel]').forEach((a) => {
+				a.addEventListener('click', (e) => {
+					e.preventDefault();
+					openPanel(a.dataset.panel);
+				});
+			});
+			document.querySelectorAll('.panel-close').forEach((b) => b.addEventListener('click', closeAll));
+			backdrop.addEventListener('click', closeAll);
+
+            function openFromHash() {
+	const name = window.location.hash.replace('#', '');
+	if (['about', 'projects', 'contact'].includes(name)) openPanel(name);
+}
+openFromHash();
+window.addEventListener('hashchange', openFromHash);
+
+			plus.addEventListener('click', () => {
+				const open = menu.classList.toggle('open');
+				plus.textContent = open ? '\u00d7' : '+';
+				plus.setAttribute('aria-expanded', String(open));
+			});
+			document.addEventListener('click', (e) => {
+				if (!menu.contains(e.target) && e.target !== plus) closeMenu();
+			});
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape') {
+					closeAll();
+					closeMenu();
+				}
+			});
+
+            const form = document.getElementById('contact-form');
+const statusEl = document.getElementById('form-status');
+const sendBtn = document.getElementById('send');
+if (form) {
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		sendBtn.disabled = true;
+		statusEl.textContent = 'Sending...';
+		try {
+			const data = Object.fromEntries(new FormData(form));
+			const res = await fetch('https://api.web3forms.com/submit', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+				body: JSON.stringify(data),
+			});
+			const result = await res.json();
+			if (result.success) {
+				form.reset();
+				statusEl.textContent = 'Thanks, your message is on its way.';
+			} else {
+				statusEl.textContent = 'Something went wrong. Please email me directly instead.';
+			}
+		} catch (err) {
+			statusEl.textContent = 'Something went wrong. Please email me directly instead.';
+		}
+		sendBtn.disabled = false;
+	});
+}
+		</script>
+	</body>
+</html>
+
+<style>
+	:global(html),
+	:global(body) {
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background: white;
+		font-family: 'Inter', sans-serif;
+	}
+	.shell {
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+		height: 100svh;
+	}
+	.stage {
+		flex: 1;
+		min-height: 0;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		gap: 12px;
+		padding: 12px;
+		width: auto;
+		max-width: none;
+	}
+	.photo-cell {
+		min-height: 0;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		border-radius: 0;
+	}
+
+	.side-text {
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		padding: 0.5rem 0.5rem 0.5rem 1rem;
+		color: #111;
+		overflow: hidden;
+	}
+	.kicker {
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		margin: 0 0 1rem;
+	}
+	.side-text h2 {
+		font-size: clamp(1.3rem, 2.2vw, 2.2rem);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.1;
+		margin: 0 0 1rem;
+	}
+	.body {
+		font-size: 0.95rem;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	.box {
+		display: inline-block;
+		background: white;
+		color: #111;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-decoration: none;
+		padding: 0.5rem 0.8rem;
+		border: none;
+		cursor: pointer;
+	}
+
+	.plus {
+		position: fixed;
+		top: 0.9rem;
+		right: 1.5rem;
+		z-index: 60;
+		width: 2.5rem;
+		height: 2.5rem;
+		display: grid;
+		place-items: center;
+		background: none;
+		color: #111;
+		border: none;
+		font-family: 'Inter', sans-serif;
+		font-size: 2rem;
+		font-weight: 300;
+		line-height: 1;
+		cursor: pointer;
+		padding: 0;
+	}
+	.menu {
+		position: fixed;
+		top: 3.4rem;
+		right: 1.5rem;
+		z-index: 60;
+		min-width: 180px;
+		background: white;
+		border: 1px solid #111;
+		padding: 0.4rem 0;
+		display: none;
+	}
+	.menu.open {
+		display: block;
+	}
+	.menu a {
+		display: block;
+		padding: 0.55rem 1rem;
+		color: #111;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-decoration: none;
+	}
+	.menu a:hover {
+		background: #f0f0f0;
+	}
+
+	.backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 40;
+		display: none;
+	}
+	.backdrop.show {
+		display: block;
+	}
+	.panel {
+		position: fixed;
+		z-index: 50;
+		top: 5rem;
+		right: 1rem;
+		bottom: 1rem;
+		width: min(540px, calc(100vw - 2rem));
+		box-sizing: border-box;
+		background: #304334;
+		color: white;
+		border-radius: 18px;
+		padding: 3rem 2.5rem 2.5rem;
+		overflow-y: auto;
+		transform: translateX(120%);
+		transition: transform 0.35s ease;
+	}
+	.panel.open {
+		transform: translateX(0);
+	}
+	.panel p {
+		font-size: 0.8rem;
+		line-height: 1.5;
+		margin: 0 0 1.25rem;
+	}
+	.panel .inline {
+		color: white;
+		text-decoration: underline;
+	}
+	.panel-close {
+		position: absolute;
+		top: 1rem;
+		right: 1.25rem;
+		background: none;
+		border: none;
+		color: white;
+		font-size: 2rem;
+		line-height: 1;
+		cursor: pointer;
+	}
+	.photo {
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		background-color: rgba(255, 255, 255, 0.12);
+		background-size: cover;
+		background-position: center;
+		border-radius: 12px;
+		margin-bottom: 1.5rem;
+	}
+	.row {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+    .form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	margin-top: 1.5rem;
+}
+.form label {
+	display: block;
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+}
+.form input[type='text'],
+.form input[type='email'],
+.form textarea {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.12);
+	border: 1px solid rgba(255, 255, 255, 0.7);
+	border-radius: 6px;
+	color: white;
+	font-family: 'Inter', sans-serif;
+	font-size: 1rem;
+	padding: 0.75rem 0.9rem;
+	margin-top: 0.4rem;
+	outline: none;
+	resize: none;
+}
+.form input:focus,
+.form textarea:focus {
+	background: rgba(255, 255, 255, 0.2);
+	border-color: white;
+}
+.form .box {
+	align-self: flex-start;
+}
+.hp {
+	display: none;
+}
+.panel .status {
+	font-size: 0.9rem;
+	margin: 0;
+	min-height: 1.2em;
+}
+.panel .alt {
+	font-size: 0.9rem;
+	margin: 1.5rem 0 0;
+}
+
+	@media (max-width: 700px) {
+		.stage {
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: repeat(3, 1fr);
+		}
+		.photo-cell:first-child {
+			grid-column: 1 / -1;
+		}
+		.side-text {
+			display: none;
+		}
+		.panel {
+			top: 4.5rem;
+		}
+	}
+</style>
