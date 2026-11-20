@@ -1,8 +1,58 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const services = [
+	{ title: 'Research', desc: 'Policy and field research on topics like circular economy, supply chains, and waste systems.' },
+	{ title: 'Data analysis', desc: "Using survey data, climate trends, and program records to show what is working and what isn't." },
+	{ title: 'Geospatial mapping', desc: 'GIS maps and spatial analysis that show where problems and opportunities are.' },
+	{ title: 'Impact communications', desc: 'Reports, visuals, and stories that explain results to funders and communities.' },
+];
+
+// Spotlight projects. Swap the text, images, or links here.
+// Put the photos in /public/projects/. tall: true gives that photo a portrait crop.
+// Cards go left, right, left, right, with the right column pushed down.
+const projects = [
+	{
+		title: 'Circular Waste Management Pilot',
+		meta: 'Nepal, 2023–ongoing',
+		blurb: 'Turning four months of fieldwork across 14 Himalayan tourist hubs into a scalable waste management model for communities in which centralized waste collection services are neither available nor feasible.',
+		image: '/projects/nepal-research.jpg',
+		href: '/projects',
+		tall: true,
+	},
+	{
+		title: 'National Circular Economy Roadmap',
+		meta: 'Mexico, 2025',
+		blurb: 'Remote sensing and GIS study of informal waste infrastructure across LATAM, plus a review of circular economy policy in 12 countries to inform Mexico\'s circular strategy.',
+		image: '/projects/wri-mexico.jpg',
+		href: '/projects',
+		tall: false,
+	},
+	{
+		title: 'Climate Landscape Analyses for Children',
+		meta: 'global, 2022-2025',
+		blurb: 'GIS-based climate and health risk mapping for UNICEF country reports, including Malawi, Libya, Kosovo, and Moldova.',
+		image: '/projects/unicef-clac.png',
+		href: '/projects',
+		tall: false,
+	},
+	{
+		title: 'NbS Pilot Site and Impact Mappings',
+		meta: 'Malawi, ongoing',
+		blurb: 'Creating geospatial visualizations of pilot sites and their impact on local communities, including water quality, biodiversity, and livelihoods.',
+		image: '/projects/pnz-map.jpeg',
+		href: '/projects',
+		tall: true,
+	},
+];
+
+// Split into two columns (even index left, odd index right), keeping the original index
+// so the cards fall back into order on mobile.
+const indexed = projects.map((p, i) => ({ ...p, i }));
+const columns = [indexed.filter((p) => p.i % 2 === 0), indexed.filter((p) => p.i % 2 === 1)];
 ---
 
 <!doctype html>
@@ -18,172 +68,215 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					<source src="/hero.mp4" type="video/mp4" />
 				</video>
 				<div class="hero-overlay"></div>
-				<div class="hero-text">
-					<h1 id="tagline" data-text="ALAIYA DEVELOPMENT COLLECTIVE" aria-label="Alaiya Development Collective"></h1>
-					<p class="eyebrow">innovation grounded in reality</p>
-				</div>
 			</section>
+
+			<p id="eyebrow" class="eyebrow">innovation grounded in reality</p>
+			<p id="eyebrow-dark" class="eyebrow dark" aria-hidden="true">innovation grounded in reality</p>
+
+			<div id="title-wrap" class="title-wrap">
+				<div class="t-layer white">
+					<h1 id="tagline" data-text="ALAIYA DEVELOPMENT|COLLECTIVE" aria-label="Alaiya Development Collective"></h1>
+				</div>
+				<div class="t-layer dark" aria-hidden="true">
+					<h1 id="tagline-dark" data-text="ALAIYA DEVELOPMENT|COLLECTIVE"></h1>
+				</div>
+			</div>
+
+			<div class="fade"></div>
 
 			<section class="intro">
 				<p class="label">WHAT WE DO</p>
-				<p class="intro-text">
+				<p class="statement">
 					Alaiya Development Collective does research, data analysis, geospatial mapping, and impact communications for organizations working on climate, sustainability, and international development. We turn raw data into findings people can use and explain them in plain language, so decision-makers, communities, and funders know what to do next.
 				</p>
+			</section>
 
-				<div class="services">
-					<div class="service">
-						<p class="label">01</p>
-						<h3>Research</h3>
-						<p>Policy and field research on topics like circular economy, supply chains, and waste systems.</p>
-					</div>
-					<div class="service">
-						<p class="label">02</p>
-						<h3>Data analysis</h3>
-						<p>Using survey data, climate trends, and program records to show what is working and what isn't.</p>
-					</div>
-					<div class="service">
-						<p class="label">03</p>
-						<h3>Geospatial mapping</h3>
-						<p>GIS maps and spatial analysis that show where problems and opportunities are.</p>
-					</div>
-					<div class="service">
-						<p class="label">04</p>
-						<h3>Impact communications</h3>
-						<p>Reports, visuals, and stories that explain results to funders and communities.</p>
-					</div>
+			<section class="block services">
+				<p class="label">SERVICES</p>
+				<div class="cols">
+					{services.map((s) => (
+						<div class="service">
+							<h3>{s.title}</h3>
+							<p class="desc">{s.desc}</p>
+						</div>
+					))}
 				</div>
 			</section>
 
-			<section class="work">
-				<div class="work-inner">
-					<p class="work-label">SELECTED WORK</p>
-					<h2 class="work-title">Recent projects</h2>
-
-					<div class="cards">
-						<a href="/projects" class="card">
-							<div class="card-image" style="background-image: url('/project-1.jpg');">
-								<span class="card-number">01</span>
-							</div>
-							<p class="card-name">Waste management pilot</p>
-							<p class="card-place">Lamjung, Nepal</p>
-						</a>
-						<a href="/projects" class="card">
-							<div class="card-image" style="background-image: url('/project-2.jpg');">
-								<span class="card-number">02</span>
-							</div>
-							<p class="card-name">Lettuce supply chains</p>
-							<p class="card-place">California, USA</p>
-						</a>
-						<a href="/projects" class="card">
-							<div class="card-image" style="background-image: url('/project-3.jpg');">
-								<span class="card-number">03</span>
-							</div>
-							<p class="card-name">Circular economy research</p>
-							<p class="card-place">Mexico</p>
-						</a>
-					</div>
+			<section class="block projects">
+				<p class="label">SELECTED PROJECTS</p>
+				<div class="stagger">
+					{columns.map((col, c) => (
+						<div class={c === 1 ? 'col offset' : 'col'}>
+							{col.map((p) => (
+								<a href={p.href} class={p.tall ? 'card tall' : 'card'} style={`order: ${p.i};`}>
+									<div class="photo" aria-hidden="true">
+										<div class="photo-img" style={`background-image: url('${p.image}');`}></div>
+									</div>
+									<p class="meta">{p.meta}</p>
+									<h3>{p.title}</h3>
+									<p class="desc">{p.blurb}</p>
+									<span class="more">READ MORE</span>
+								</a>
+							))}
+						</div>
+					))}
 				</div>
-			</section>
-
-			<section class="cta">
-				
-				<h2 class="cta-title">Working on something?</h2>
-				<p class="cta-text">Tell me about your project and we'll figure out where to start.</p>
-				<a href="/contact" class="cta-button">Connect with me &rarr;</a>
+				<a href="/projects" class="all">VIEW ALL PROJECTS</a>
 			</section>
 		</main>
-		<Footer />
-
+<Footer />
 		<script>
-			const el = document.getElementById('tagline');
-			const lines = el.dataset.text.split('|');
-			const letters = [];
-
-			lines.forEach((line, n) => {
-				if (n > 0) {
-				el.appendChild(document.createTextNode(' '));
-				el.appendChild(document.createElement('br'));
-				}
-				const words = line.split(' ');
-				words.forEach((word, w) => {
-					const wordEl = document.createElement('span');
-					wordEl.className = 'word';
-					word.split('').forEach((ch) => {
-						const s = document.createElement('span');
-						s.className = 'ch';
-						s.textContent = ch;
-						wordEl.appendChild(s);
-						letters.push(s);
+			// Build a tagline letter by letter and return its letters
+			function build(el) {
+				const lines = el.dataset.text.split('|');
+				const letters = [];
+				lines.forEach((line, n) => {
+					if (n > 0) {
+						el.appendChild(document.createTextNode(' '));
+						el.appendChild(document.createElement('br'));
+					}
+					const words = line.split(' ');
+					words.forEach((word, w) => {
+						const wordEl = document.createElement('span');
+						wordEl.className = 'word';
+						word.split('').forEach((ch) => {
+							const s = document.createElement('span');
+							s.className = 'ch';
+							s.textContent = ch;
+							wordEl.appendChild(s);
+							letters.push(s);
+						});
+						el.appendChild(wordEl);
+						if (w < words.length - 1) el.appendChild(document.createTextNode(' '));
 					});
-					el.appendChild(wordEl);
-					if (w < words.length - 1) el.appendChild(document.createTextNode(' '));
 				});
-			});
+				return letters;
+			}
+
+			const lettersWhite = build(document.getElementById('tagline'));
+			const lettersDark = build(document.getElementById('tagline-dark'));
 
 			let i = 0;
 			function type() {
-				if (i < letters.length) {
-					if (i > 0) letters[i - 1].classList.remove('last');
-					letters[i].classList.add('shown', 'last');
+				if (i < lettersWhite.length) {
+					[lettersWhite, lettersDark].forEach((set) => {
+						if (i > 0) set[i - 1].classList.remove('last');
+						set[i].classList.add('shown', 'last');
+					});
 					i++;
 					setTimeout(type, 65);
 				}
 			}
 			type();
+
+			// Scroll behavior
+			const hero = document.querySelector('.hero');
+			const header = document.querySelector('header.landing');
+			const title = document.getElementById('title-wrap');
+			const tWhite = title.querySelector('.white');
+			const tDark = title.querySelector('.dark');
+			const eyebrow = document.getElementById('eyebrow');
+			const eyebrowDark = document.getElementById('eyebrow-dark');
+			const GAP = 24;
+
+			// Dark copy of the header (dark logo, black button with white text).
+			// The white header shows above the video's bottom edge and this copy shows
+			// below it, the same way the title splits.
+			const headerDark = header.cloneNode(true);
+			headerDark.classList.add('dark-copy');
+			headerDark.setAttribute('aria-hidden', 'true');
+			headerDark.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+			headerDark.querySelectorAll('a, button').forEach((n) => n.setAttribute('tabindex', '-1'));
+			const darkLogoImg = headerDark.querySelector('.logo');
+			if (darkLogoImg) {
+				darkLogoImg.removeAttribute('srcset');
+				darkLogoImg.src = '/dark-logo.png';
+			}
+			header.after(headerDark);
+
+			function update() {
+				const hh = header.offsetHeight;
+				const th = title.offsetHeight;
+				const eh = eyebrow.offsetHeight;
+				const root = document.documentElement.style;
+				root.setProperty('--hh', hh + 'px');
+				root.setProperty('--th', th + 'px');
+				root.setProperty('--ey', GAP + eh + 'px');
+
+				const heroBottom = hero.getBoundingClientRect().bottom;
+
+				// Title rides up with the page, then stops under the header
+				const startTop = window.innerHeight / 2 - th / 2;
+				const top = Math.max(hh, startTop - window.scrollY);
+				title.style.top = top + 'px';
+
+				// White above the bottom edge of the video, dark below it
+				const edge = Math.min(Math.max(heroBottom - top, 0), th);
+				tWhite.style.clipPath = 'inset(0 0 ' + (th - edge) + 'px 0)';
+				tDark.style.clipPath = 'inset(' + edge + 'px 0 0 0)';
+
+				// Eyebrow stays under the title and switches at the video's bottom edge, like the title
+				const eyeTop = top + th + GAP;
+				eyebrow.style.top = eyeTop + 'px';
+				eyebrowDark.style.top = eyeTop + 'px';
+				const eEdge = Math.min(Math.max(heroBottom - eyeTop, 0), eh);
+				eyebrow.style.clipPath = 'inset(0 0 ' + (eh - eEdge) + 'px 0)';
+				eyebrowDark.style.clipPath = 'inset(' + eEdge + 'px 0 0 0)';
+
+				// Header: logo and button switch at the video's bottom edge too
+				const hTop = header.getBoundingClientRect().top;
+				const hEdge = Math.min(Math.max(heroBottom - hTop, 0), hh);
+				header.style.clipPath = 'inset(0 0 ' + (hh - hEdge) + 'px 0)';
+				headerDark.style.clipPath = 'inset(' + hEdge + 'px 0 0 0)';
+			}
+
+			update();
+			window.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+			window.addEventListener('resize', update);
+			window.addEventListener('load', update);
 		</script>
 	</body>
 </html>
 
 <style>
-	:global(html),
-	:global(body) {
-		margin: 0;
-		padding: 0;
-		overflow-x: hidden;
-	}
 	:global(html) {
 		scrollbar-width: none;
 	}
 	:global(html::-webkit-scrollbar) {
 		display: none;
 	}
+	:global(body) {
+		margin: 0;
+		padding: 0;
+		background: white;
+	}
 	:global(main) {
 		width: 100%;
 		max-width: none;
 		padding: 0;
 	}
-	:global(header) {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		box-sizing: border-box;
-		padding: 1.5rem 2rem;
-		background: transparent !important;
-		box-shadow: none !important;
-		z-index: 10;
+
+	/* Header stays fixed and see-through. A dark copy of it shows below the video's bottom edge. */
+	:global(header.landing) {
+		position: fixed !important;
 	}
-	:global(header a) {
+	:global(html body header.landing.dark-copy a.box) {
+		background: #111 !important;
+	}
+	:global(html body header.landing.dark-copy a.box),
+	:global(html body header.landing.dark-copy a.box *) {
 		color: white !important;
+		-webkit-text-fill-color: white !important;
 	}
+
 	.hero {
-	position: relative;
-	height: 100vh;
-	height: 100svh;
-	overflow: hidden;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: white;
-}
-.hero-text {
-	position: relative;
-	z-index: 2;
-	width: 100%;
-	box-sizing: border-box;
-	padding: 0 2rem;
-	margin: 0rem 0 0 0%;
-}
+		position: relative;
+		height: 100vh;
+		height: 100svh;
+		overflow: hidden;
+		color: white;
+	}
 	.hero-video {
 		position: absolute;
 		inset: 0;
@@ -196,36 +289,59 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		inset: 0;
 		background: rgba(0, 0, 0, 0.35);
 	}
+
 	.eyebrow {
+		position: fixed;
+		left: 0;
+		right: 0;
+		z-index: 4;
+		margin: 0;
+		text-align: center;
 		font-family: 'Inter', sans-serif;
 		font-size: 1rem;
 		letter-spacing: 0.02em;
+		color: white;
+		pointer-events: none;
+	}
+	.eyebrow.dark {
+		color: #111;
+	}
+
+	.title-wrap {
+		position: fixed;
+		left: 0;
+		right: 0;
+		z-index: 5;
+		pointer-events: none;
+	}
+	.t-layer {
+		box-sizing: border-box;
+		padding: 0.6rem 2rem 0.8rem;
+	}
+	.t-layer.white {
+		color: white;
+	}
+	.t-layer.dark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		color: #111;
+		clip-path: inset(100% 0 0 0);
+	}
+	h1 {
+		color: inherit;
+		font-family: 'Inter', sans-serif;
+		font-size: 4.4vw;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1;
 		text-align: center;
-		color: rgba(255, 255, 255, 0.9);
-		white-space: nowrap;
-		margin: 1rem 0 0;
-}
-	h1 {
-	color: white;
-	font-family: 'Inter', sans-serif;
-	font-size: 5.3vw;
-	font-weight: 700;
-	letter-spacing: -0.03em;
-	line-height: 1;
-	text-align: center;
-	margin: 0;
-}
-:global(#tagline br) {
-	display: none;
-}
-@media (max-width: 700px) {
-	h1 {
-		font-size: 7vw;
+		margin: 0;
 	}
-	:global(#tagline br) {
-		display: inline;
+	:global(.t-layer br) {
+		display: none;
 	}
-}
 	:global(.word) {
 		display: inline-block;
 		white-space: nowrap;
@@ -244,7 +360,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		top: 0.25em;
 		width: 3px;
 		height: 0.9em;
-		background: white;
+		background: currentColor;
 		animation: blink 1s step-end infinite;
 	}
 	@keyframes blink {
@@ -252,142 +368,236 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			opacity: 0;
 		}
 	}
+
+	/* Soft fade so content scrolling up disappears behind the title, eyebrow, and header */
+	.fade {
+		position: sticky;
+		top: 0;
+		z-index: 3;
+		height: calc(var(--hh, 110px) + var(--th, 80px) + var(--ey, 0px) + 3rem);
+		margin-bottom: calc(-1 * (var(--hh, 110px) + var(--th, 80px) + var(--ey, 0px) + 3rem));
+		background: linear-gradient(
+			to bottom,
+			white 0,
+			white calc(var(--hh, 110px) + var(--th, 80px) + var(--ey, 0px)),
+			rgba(255, 255, 255, 0) 100%
+		);
+		pointer-events: none;
+	}
+
 	.intro {
 		max-width: 1100px;
 		margin: 0 auto;
-		padding: 6rem 2rem;
+		padding: calc(var(--hh, 110px) + var(--th, 80px) + var(--ey, 0px) + 4rem) 2rem 6rem;
 		color: #111;
-		text-align: left;
 	}
 	.label {
 		font-size: 0.75rem;
+		font-weight: 600;
 		letter-spacing: 0.2em;
-		color: #111;
 		margin: 0 0 1.5rem;
 	}
-	.intro-text {
+	.statement {
 		font-size: clamp(1.5rem, 3vw, 2.4rem);
-		line-height: 1.3;
-		color: #111;
-		margin: 0 0 5rem;
-	}
-	.services {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		gap: 2.5rem;
-		border-top: 1px solid #111;
-		padding-top: 2rem;
-	}
-	.service h3 {
-		font-size: 1.1rem;
 		font-weight: 600;
-		color: #111;
-		margin: 0 0 0.75rem;
-	}
-	.service p {
-		font-size: 0.95rem;
-		line-height: 1.5;
-		color: #111;
+		letter-spacing: -0.02em;
+		line-height: 1.25;
 		margin: 0;
 	}
-	.service .label {
-		margin-bottom: 1rem;
-	}
 
-	.work {
-		background: #000;
-		color: white;
-		padding: 6rem 2rem;
-	}
-	.work-inner {
+	/* Services and projects share one container */
+	.block {
 		max-width: 1100px;
 		margin: 0 auto;
+		padding: 0 2rem 8rem;
+		color: #111;
 	}
-	.work-label {
-		font-size: 0.75rem;
-		letter-spacing: 0.2em;
-		color: rgba(255, 255, 255, 0.6);
+.services {
+	padding-bottom: 4rem;
+}
+	/* Services: four columns, no numbers */
+	.services .label {
+	border-top: 1px solid #111;
+	padding-top: 1.5rem;
+	margin: 0 0 2rem;
+}
+	.cols {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 2.5rem;
+		
+	}
+	.service h3 {
+		font-size: clamp(0.8rem, 1.2vw, 1rem);
+		font-weight: 600;
+		letter-spacing: -0.02em;
 		margin: 0 0 1rem;
 	}
-	.work-title {
-		font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-		font-weight: 400;
-		color: white;
-		margin: 0 0 3rem;
+	.desc {
+		font-size: 0.95rem;
+		line-height: 1.5;
+		margin: 0;
 	}
-	.cards {
+
+	/* Projects: two columns, the right one pushed down */
+	.stagger {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-		gap: 2rem;
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
+		align-items: start;
+	}
+	.col {
+		display: flex;
+		flex-direction: column;
+		gap: 5rem;
+	}
+	.col.offset {
+		margin-top: 8rem;
 	}
 	.card {
 		display: block;
+		color: inherit;
 		text-decoration: none;
-		color: white;
 	}
-	.card-image {
-		position: relative;
+	.photo {
+		overflow: hidden;
+		background: #e9e9e4;
+		aspect-ratio: 4 / 3;
+	}
+	.card.tall .photo {
 		aspect-ratio: 4 / 5;
-		border-radius: 18px;
-		background-color: #1a1a1a;
+	}
+	.photo-img {
+		width: 100%;
+		height: 100%;
 		background-size: cover;
 		background-position: center;
-		margin-bottom: 1rem;
-		overflow: hidden;
+		transition: transform 0.5s ease;
 	}
-	.card-number {
-		position: absolute;
-		top: 1rem;
-		left: 1.25rem;
-		font-size: 1.5rem;
-		font-weight: 700;
-		color: rgba(255, 255, 255, 0.6);
+	.card:hover .photo-img {
+		transform: scale(1.03);
 	}
-	.card-name {
-		font-size: 1.05rem;
-		color: white;
-		margin: 0 0 0.25rem;
-	}
-	.card-place {
-		font-size: 0.9rem;
-		color: rgba(255, 255, 255, 0.6);
-		margin: 0;
-	}
-
-	.cta {
-		background: #f8f8f8;
-		text-align: center;
-		padding: 6rem 2rem;
-	}
-	.pill {
-		display: inline-block;
+	.meta {
 		font-size: 0.7rem;
-		letter-spacing: 0.25em;
-		color: #666;
-		background: #ececec;
-		padding: 0.5rem 1rem;
-		border-radius: 999px;
-		margin: 0 0 1.5rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: #555;
+		margin: 1.25rem 0 0.5rem;
 	}
-	.cta-title {
-		font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-		font-weight: 400;
-		color: #111;
+	.card h3 {
+		font-size: clamp(1.2rem, 2vw, 1.6rem);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.15;
 		margin: 0 0 0.75rem;
 	}
-	.cta-text {
-		font-size: 1rem;
-		color: #666;
-		margin: 0 0 2rem;
+	.card .desc {
+		margin: 0 0 1rem;
 	}
-	.cta-button {
+	.more {
 		display: inline-block;
-		background: #0a0a0a;
-		color: white;
-		text-decoration: none;
-		padding: 1rem 2rem;
-		border-radius: 999px;
-		font-size: 0.95rem;
+		font-size: 0.7rem;
 		font-weight: 600;
+		letter-spacing: 0.08em;
+		border-bottom: 1px solid #111;
+		padding-bottom: 2px;
+	}
+	.all {
+		display: inline-block;
+		margin-top: 5rem;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		color: #111;
+		text-decoration: none;
+		border-bottom: 1px solid #111;
+		padding-bottom: 2px;
+	}
+
+	/* Contact CTA: black, so it runs straight into a black footer */
+	.contact {
+		background: #111;
+		color: white;
+		padding: 7rem 2rem;
+	}
+	.contact-inner {
+		max-width: 1100px;
+		margin: 0 auto;
+	}
+	.contact h2 {
+		font-size: clamp(1.8rem, 4vw, 3.2rem);
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		line-height: 1.15;
+		max-width: 24ch;
+		margin: 0 0 1.25rem;
+	}
+	.contact-text {
+		font-size: 0.95rem;
+		line-height: 1.5;
+		margin: 0 0 2.5rem;
+	}
+	.contact-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1.5rem;
+	}
+	.cta {
+		display: inline-block;
+		background: white;
+		color: #111;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-decoration: none;
+		padding: 0.8rem 1.2rem;
+	}
+	.cta:hover {
+		background: #e6e6e6;
+	}
+	.mail {
+		color: white;
+		font-size: 0.85rem;
+		text-decoration: underline;
+	}
+	.cols {
+            display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid #111;
+        } 
+
+	@media (max-width: 900px) {
+		.cols {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 700px) {
+		h1 {
+			font-size: 7vw;
+		}
+		:global(.t-layer br) {
+			display: inline;
+		}
+	
+		/* One column on phones, cards back in their original order */
+		.stagger {
+			display: flex;
+			flex-direction: column;
+			gap: 3.5rem;
+		}
+		.col {
+			display: contents;
+		}
+		.col.offset {
+			margin-top: 0;
+		}
+		.contact {
+			padding: 5rem 1.5rem;
+		}
 	}
 </style>

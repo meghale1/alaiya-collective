@@ -1,27 +1,159 @@
 ---
-const today = new Date();
+const pitch = 'Working on something in climate or development? Tell us about it and we’ll figure out where to start.';
+
+const links = [
+	{ label: 'Home', href: '/' },
+	{ label: 'About', href: '/about' },
+	{ label: 'Projects', href: '/projects' },
+	{ label: 'Project map', href: '/map' },
+	{ label: 'CV', href: '/cv' },
+	{ label: 'Contact', href: '/contact' },
+];
+
+// Empty href = hidden. Paste your LinkedIn URL to show it.
+const socials = [
+	{ label: 'YouTube', href: 'https://www.youtube.com/@alaiyacollective', external: true },
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/alaiyacollective', external: true },
+	{ label: 'Email', href: 'mailto:meghan@alaiyacollective.com', external: false },
+].filter((s) => s.href);
+
+const year = new Date().getFullYear();
 ---
 
-<footer>
-	&copy; {today.getFullYear()} Alaiya Development Collective. All rights reserved.
-	
+<footer class="site-footer">
+	<div class="inner">
+		<div class="top">
+			<p class="name">Alaiya Development Collective</p>
+			<div class="connect">
+				<p class="pitch">{pitch}</p>
+				<a href="/contact" class="box">CONNECT WITH US</a>
+			</div>
+		</div>
+
+		<div class="bottom">
+			<ul class="links">
+				{links.map((l) => (
+					<li><a href={l.href}>{l.label}</a></li>
+				))}
+			</ul>
+			<ul class="links">
+				{socials.map((s) => (
+					<li><a href={s.href} target={s.external ? '_blank' : undefined} rel={s.external ? 'noopener' : undefined}>{s.label}</a></li>
+				))}
+			</ul>
+		</div>
+
+		<p class="copy">© {year} Alaiya Development Collective</p>
+	</div>
 </footer>
+
 <style>
-	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--black));
-		text-align: center;
+	.site-footer {
+		background: #111;
+		color: white;
+		font-family: 'Inter', sans-serif;
+		font-size: 1rem;
+		line-height: 1.5;
+		text-align: left;
+		padding: 3.5rem 2rem 1.5rem;
+		box-sizing: border-box;
 	}
-	.social-links {
+	.inner {
+		max-width: 1100px;
+		margin: 0 auto;
+	}
+
+	.top {
 		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 2rem;
+		padding-bottom: 2.5rem;
 	}
-	.social-links a {
+	.name {
+		margin: 0;
+		color: white;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+
+	/* Pushed to the far right */
+	.connect {
+		margin-left: auto;
+		max-width: 20rem;
+	}
+	.pitch {
+		margin: 0 0 1rem;
+		color: white;
+		font-family: 'Noto Serif', serif;
+		font-size: 0.85rem;
+		line-height: 1.5;
+	}
+	.box {
+		display: inline-block;
+		background: white;
+		color: #111;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
 		text-decoration: none;
-		color: rgb(var(--black));
+		padding: 0.5rem 0.8rem;
 	}
-	
+	.box:hover {
+		background: #e6e6e6;
+		color: #111;
+	}
+
+	/* Bottom row: site links left, socials right */
+	.bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1rem 2rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.25);
+	}
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.links a {
+		color: white;
+		font-size: 0.65rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		text-decoration: none;
+	}
+	.links a:hover {
+		color: white;
+		text-decoration: underline;
+	}
+	.copy {
+		margin: 1.5rem 0 0;
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.65rem;
+	}
+
+	@media (max-width: 700px) {
+		.site-footer {
+			padding: 3rem 1.5rem 1.5rem;
+		}
+		.top {
+			flex-direction: column;
+		}
+		.connect {
+			margin-left: 0;
+			max-width: none;
+		}
+		.bottom {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
 </style>

@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <!doctype html>
@@ -165,6 +166,7 @@ if (form) {
 	});
 }
 		</script>
+		<Footer />
 	</body>
 </html>
 
@@ -173,7 +175,7 @@ if (form) {
 	:global(body) {
 		margin: 0;
 		padding: 0;
-		overflow: hidden;
+		/*overflow: hidden;*/
 		background: white;
 		font-family: 'Inter', sans-serif;
 	}
