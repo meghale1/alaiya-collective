@@ -26,7 +26,7 @@ const projects = [
 	{
 		title: 'National Circular Economy Roadmap',
 		meta: 'Mexico, 2025',
-		blurb: 'Remote sensing and GIS study of informal waste infrastructure across LATAM, plus a review of circular economy policy in 12 countries to inform Mexico\'s circular strategy.',
+		blurb: 'Remote sensing and GIS study of informal waste infrastructure across LATAM alongside a review of circular economy policy in 12 countries to inform Mexico\'s circular strategy.',
 		image: '/projects/wri-mexico.jpg',
 		href: '/projects',
 		tall: false,
@@ -34,16 +34,16 @@ const projects = [
 	{
 		title: 'Climate Landscape Analyses for Children',
 		meta: 'global, 2022-2025',
-		blurb: 'GIS-based climate and health risk mapping for UNICEF country reports, including Malawi, Libya, Kosovo, and Moldova.',
-		image: '/projects/unicef-clac.png',
+		blurb: 'GIS-based climate and health risk mapping for UNICEF country CLAC reports, including Malawi, Libya, Kosovo, and Moldova.',
+		image: '/unicef-clac.png',
 		href: '/projects',
 		tall: false,
 	},
 	{
-		title: 'NbS Pilot Site and Impact Mappings',
-		meta: 'Malawi, ongoing',
+		title: 'NbS Pilot - Site and Impact Mappings',
+		meta: 'Malawi, Namibia, Botswana, ongoing',
 		blurb: 'Creating geospatial visualizations of pilot sites and their impact on local communities, including water quality, biodiversity, and livelihoods.',
-		image: '/projects/pnz-map.jpeg',
+		image: '/project-1.png',
 		href: '/projects',
 		tall: true,
 	},
@@ -71,7 +71,6 @@ const columns = [indexed.filter((p) => p.i % 2 === 0), indexed.filter((p) => p.i
 			</section>
 
 			<p id="eyebrow" class="eyebrow">innovation grounded in reality</p>
-			<p id="eyebrow-dark" class="eyebrow dark" aria-hidden="true">innovation grounded in reality</p>
 
 			<div id="title-wrap" class="title-wrap">
 				<div class="t-layer white">
@@ -82,12 +81,10 @@ const columns = [indexed.filter((p) => p.i % 2 === 0), indexed.filter((p) => p.i
 				</div>
 			</div>
 
-			<div class="fade"></div>
-
 			<section class="intro">
 				<p class="label">WHAT WE DO</p>
 				<p class="statement">
-					Alaiya Development Collective does research, data analysis, geospatial mapping, and impact communications for organizations working on climate, sustainability, and international development. We turn raw data into findings people can use and explain them in plain language, so decision-makers, communities, and funders know what to do next.
+					Alaiya Development Collective conducts research, data analysis, geospatial mapping, and impact communications for organizations working on climate, sustainability, and international development. We turn raw data into findings people can use and understand so decision-makers, communities, and funders can see their impact and know what to do next.
 				</p>
 			</section>
 
@@ -166,6 +163,8 @@ const columns = [indexed.filter((p) => p.i % 2 === 0), indexed.filter((p) => p.i
 					});
 					i++;
 					setTimeout(type, 65);
+				} else {
+					document.getElementById('eyebrow').classList.add('show');
 				}
 			}
 			type();
@@ -177,7 +176,6 @@ const columns = [indexed.filter((p) => p.i % 2 === 0), indexed.filter((p) => p.i
 			const tWhite = title.querySelector('.white');
 			const tDark = title.querySelector('.dark');
 			const eyebrow = document.getElementById('eyebrow');
-			const eyebrowDark = document.getElementById('eyebrow-dark');
 			const GAP = 24;
 
 			// Dark copy of the header (dark logo, black button with white text).
@@ -202,7 +200,6 @@ const columns = [indexed.filter((p) => p.i % 2 === 0), indexed.filter((p) => p.i
 				const root = document.documentElement.style;
 				root.setProperty('--hh', hh + 'px');
 				root.setProperty('--th', th + 'px');
-				root.setProperty('--ey', GAP + eh + 'px');
 
 				const heroBottom = hero.getBoundingClientRect().bottom;
 
@@ -216,13 +213,11 @@ const columns = [indexed.filter((p) => p.i % 2 === 0), indexed.filter((p) => p.i
 				tWhite.style.clipPath = 'inset(0 0 ' + (th - edge) + 'px 0)';
 				tDark.style.clipPath = 'inset(' + edge + 'px 0 0 0)';
 
-				// Eyebrow stays under the title and switches at the video's bottom edge, like the title
+				// Eyebrow stays under the title and is wiped away by the video's bottom edge
 				const eyeTop = top + th + GAP;
 				eyebrow.style.top = eyeTop + 'px';
-				eyebrowDark.style.top = eyeTop + 'px';
 				const eEdge = Math.min(Math.max(heroBottom - eyeTop, 0), eh);
 				eyebrow.style.clipPath = 'inset(0 0 ' + (eh - eEdge) + 'px 0)';
-				eyebrowDark.style.clipPath = 'inset(' + eEdge + 'px 0 0 0)';
 
 				// Header: logo and button switch at the video's bottom edge too
 				const hTop = header.getBoundingClientRect().top;
@@ -302,9 +297,11 @@ const columns = [indexed.filter((p) => p.i % 2 === 0), indexed.filter((p) => p.i
 		letter-spacing: 0.02em;
 		color: white;
 		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.6s ease;
 	}
-	.eyebrow.dark {
-		color: #111;
+	.eyebrow.show {
+		opacity: 1;
 	}
 
 	.title-wrap {
@@ -369,26 +366,10 @@ const columns = [indexed.filter((p) => p.i % 2 === 0), indexed.filter((p) => p.i
 		}
 	}
 
-	/* Soft fade so content scrolling up disappears behind the title, eyebrow, and header */
-	.fade {
-		position: sticky;
-		top: 0;
-		z-index: 3;
-		height: calc(var(--hh, 110px) + var(--th, 80px) + var(--ey, 0px) + 3rem);
-		margin-bottom: calc(-1 * (var(--hh, 110px) + var(--th, 80px) + var(--ey, 0px) + 3rem));
-		background: linear-gradient(
-			to bottom,
-			white 0,
-			white calc(var(--hh, 110px) + var(--th, 80px) + var(--ey, 0px)),
-			rgba(255, 255, 255, 0) 100%
-		);
-		pointer-events: none;
-	}
-
 	.intro {
 		max-width: 1100px;
 		margin: 0 auto;
-		padding: calc(var(--hh, 110px) + var(--th, 80px) + var(--ey, 0px) + 4rem) 2rem 6rem;
+		padding: 5rem 2rem 6rem;
 		color: #111;
 	}
 	.label {

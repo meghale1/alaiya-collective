@@ -1,0 +1,82 @@
+---
+---
+
+<button id="plus" class="pm-plus" aria-label="Open menu" aria-expanded="false">+</button>
+<nav id="menu" class="pm-menu">
+	<a href="https://www.youtube.com/@alaiyacollective" target="_blank" rel="noopener">YOUTUBE</a>
+	<a href="https://linkedin.com/company/alaiya-collective" target="_blank" rel="noopener">LINKEDIN</a>
+	<a href="https://instagram.com/alaiyacollective" target="_blank" rel="noopener">INSTAGRAM</a>
+	<a href="mailto:meghan@alaiyacollective.com">EMAIL</a>
+</nav>
+
+<script>
+	const plus = document.getElementById('plus');
+	const menu = document.getElementById('menu');
+
+	function closeMenu() {
+		menu.classList.remove('open');
+		plus.textContent = '+';
+		plus.setAttribute('aria-expanded', 'false');
+	}
+
+	plus.addEventListener('click', () => {
+		const open = menu.classList.toggle('open');
+		plus.textContent = open ? '\u00d7' : '+';
+		plus.setAttribute('aria-expanded', String(open));
+	});
+	document.addEventListener('click', (e) => {
+		if (!menu.contains(e.target) && e.target !== plus) closeMenu();
+	});
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') closeMenu();
+	});
+</script>
+
+<style is:global>
+	.pm-plus {
+		position: fixed;
+		top: 0.9rem;
+		right: 1.5rem;
+		z-index: 60;
+		width: 2.5rem;
+		height: 2.5rem;
+		display: grid;
+		place-items: center;
+		background: none;
+		color: #111;
+		border: none;
+		font-family: 'Inter', sans-serif;
+		font-size: 2rem;
+		font-weight: 300;
+		line-height: 1;
+		cursor: pointer;
+		padding: 0;
+	}
+	.pm-menu {
+		position: fixed;
+		top: 3.4rem;
+		right: 1.5rem;
+		z-index: 60;
+		min-width: 180px;
+		background: white;
+		border: 1px solid #111;
+		padding: 0.4rem 0;
+		display: none;
+	}
+	.pm-menu.open {
+		display: block;
+	}
+	.pm-menu a {
+		display: block;
+		padding: 0.55rem 1rem;
+		color: #111;
+		font-family: 'Inter', sans-serif;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-decoration: none;
+	}
+	.pm-menu a:hover {
+		background: #f0f0f0;
+	}
+</style>

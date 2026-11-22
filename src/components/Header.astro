@@ -12,14 +12,15 @@ const { variant = 'interior' } = Astro.props;
 		</nav>
 	) : (
 		<nav class="interior-nav">
+			<a href="/" class="return">RETURN</a>
 			<div class="side">
-				<a href="/">HOME</a>
-				<a href="/explore#about" data-panel="about">ABOUT</a>
+				<a href="/explore">HOME</a>
+				<a href="/about" data-panel="about">ABOUT</a>
 			</div>
 			<a href="/" class="center-name">Alaiya Collective</a>
 			<div class="side">
-				<a href="/explore#projects" data-panel="projects">PROJECTS</a>
-				<a href="/explore#contact" data-panel="contact">CONTACT</a>
+				<a href="/projects" data-panel="projects">PROJECTS</a>
+				<a href="/contact" data-panel="contact">CONTACT</a>
 			</div>
 		</nav>
 	)}
@@ -78,7 +79,27 @@ const { variant = 'interior' } = Astro.props;
 		grid-template-columns: 1fr auto 1fr;
 		align-items: center;
 		padding: 1.25rem 2rem;
+		position: relative;
 	}
+	.return {
+	position: absolute;
+	left: 1.5rem;
+	top: 50%;
+	transform: translateY(-50%);
+	background: #111;
+	color: white;
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-decoration: none;
+	padding: 0.5rem 0.8rem;
+}
+.return:hover {
+	background: #304334;
+}
+.interior-nav .side:first-of-type {
+	padding-left: 6.5rem;
+}
 	.side {
 		display: flex;
 		justify-content: space-around;

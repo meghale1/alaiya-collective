@@ -1,17 +1,19 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PlusMenu from '../components/PlusMenu.astro';
 
 // All CV content lives in this block. Edit the text here and the page updates.
 
 const name = 'Meghan Hale';
-const tagline = 'Climate & Sustainability Analyst | Climate Risk | GIS | Project Management';
+const tagline = 'Climate Risk, GIS, Data Visualization, Impact Evaluation, Project Management';
 const email = 'meghan@alaiyacollective.com';
 const linkedin = 'https://www.linkedin.com/in/meghan-hale/';
 
 
 const summary =
-	'Climate & sustainability professional with experience applying data analysis, EO, environmental policy evaluation, and stakeholder engagement to complex policy and environmental challenges. My work blends quantitative and qualitative analysis with visualization to inform evidence-based recommendations: mapping climate risks, evaluating policy impacts, and helping stakeholders understand how local dynamics shape real-world systems. Strong technical writing, research, project management and communication skills to integrate cross-sector perspectives and support systems-level thinking.';
+	'Climate & development consultant with experience applying data analysis, EO, environmental policy evaluation, and stakeholder engagement to complex policy and environmental challenges. My work blends quantitative and qualitative analysis with visualization to inform evidence-based recommendations: mapping climate risks, evaluating policy impacts, and helping stakeholders understand how local dynamics shape real-world systems. Strong technical writing, research, project management and communication skills to integrate cross-sector perspectives and support systems-level thinking.';
 
 const skills = [
 	{ label: 'Spatial', items: 'ArcGIS, GEE, QGIS, GeoAI, GDAL, rasterio, Landsat/Sentinel' },
@@ -151,6 +153,7 @@ const interests = [
 	</head>
 	<body>
 		<Header />
+		<PlusMenu />
 		<main class="cv">
 			<section class="top">
 				<div class="id">
@@ -255,6 +258,7 @@ const interests = [
 				</div>
 			</div>
 		</main>
+	<Footer />
 	</body>
 </html>
 

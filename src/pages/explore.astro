@@ -2,6 +2,25 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import PlusMenu from '../components/PlusMenu.astro';
+
+// Back of each flip card. Edit the place and text here.
+const cards = [
+	{ img: '/explore-1.jpg', place: 'JORHAT, INDIA', text: 'Developed with Karunar Kheti Trust, Selenghat Valley School is a community-run rural school in Jorhat that started in 2020 and now serves 160 students. The school\'s model replaces rote learning with hands-on, locally driven education and is partnered with seven nearby government schools.' },
+	{ img: '/explore-2.jpg', place: 'CICURUG, INDONESIA', text: '' },
+	{ img: '/explore-3.jpg', place: 'SUKABUMI, INDONESIA', text: '' },
+	{ img: '/explore-4.jpg', place: 'JOHOR, MALAYSIA', text: '' },
+	{ img: '/explore-5.jpg', place: 'SUKABUMI, INDONESIA', text: '' },
+];
+
+const services = [
+	{ title: 'Research & Fieldwork', text: 'Survey design, data collection, stakeholder interviews, and project methodology' },
+	{ title: 'Monitoring & Evaluation', text: 'Impact evaluation, monitoring and evaluation frameworks, and program assessment' },
+	{ title: 'Data & Statistical Analysis', text: 'Database management and analysis in R, Stata, SPSS, SQL, and Python' },
+	{ title: 'Geospatial & Risk Analysis', text: 'Geospatial modeling, remote sensing, and climate, health, and disaster vulnerability/risk mapping' },
+	{ title: 'Policy & Strategy', text: 'Policy landscape analysis, impact assessment, and strategic recommendations' },
+	{ title: 'Communications & Reporting', text: 'Visual storytelling (photography, videography, and story maps) plus donor reporting, infographics, presentations, and reports' },
+];
 ---
 
 <!doctype html>
@@ -10,176 +29,176 @@ import Footer from '../components/Footer.astro';
 		<BaseHead title="Alaiya Development Collective" description="Alaiya Development Collective" />
 	</head>
 	<body>
-		<div class="shell">
+		<div class="first">
 			<Header />
-			<main class="stage">
-				<div class="photo-cell" style="background-image: url('/explore-1.jpg');"></div>
-				<div class="photo-cell" style="background-image: url('/explore-2.jpg');"></div>
-				<div class="photo-cell" style="background-image: url('/explore-3.jpg');"></div>
-				<div class="photo-cell" style="background-image: url('/explore-4.jpg');"></div>
-				<div class="photo-cell" style="background-image: url('/explore-5.jpg');"></div>
+			<div class="stage">
+				{cards.map((c, i) => (
+					<button class="photo-cell card" type="button" aria-pressed="false" aria-label={`Flip photo ${i + 1} for details`}>
+						<span class="card-inner">
+							<span class="face front" style={`background-image: url('${c.img}');`}>
+								<span class="flip-badge">
+									FLIP
+									<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path></svg>
+								</span>
+							</span>
+							<span class="face back">
+								<span class="flip-badge">
+									FLIP BACK
+									<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>
+								</span>
+								<span class="back-place">{c.place}</span>
+								<span class="back-text">{c.text}</span>
+							</span>
+						</span>
+					</button>
+				))}
 
 				<div class="side-text">
+					<p class="hint">CLICK A PHOTO TO FLIP IT</p>
 					<p class="kicker">ALAIYA DEVELOPMENT COLLECTIVE</p>
-					<h2>Research, data, and maps for people working on climate and development.</h2>
+					<h2>Research, data, and maps for people and communities.</h2>
 					<p class="body">Contributing to projects globally.</p>
 				</div>
-			</main>
+			</div>
 		</div>
 
-		<button id="plus" class="plus" aria-label="Open menu" aria-expanded="false">+</button>
-		<nav id="menu" class="menu">
-			<a href="/explore#about" data-panel="about">ABOUT</a>
-            <a href="/explore#projects" data-panel="projects">PROJECTS</a>
-            <a href="/explore#contact" data-panel="contact">CONTACT</a>
-			<a href="/map">PROJECT MAP</a>
-			<a href="/cv">CV</a>
-			<a href="https://www.youtube.com/@alaiyacollective" target="_blank" rel="noopener">YOUTUBE</a>
-			<a href="mailto:hello@alaiyacollective.com">EMAIL</a>
-		</nav>
+		<main class="rest">
+			<section class="block vm">
+				<p class="label">VISION</p>
+				<p class="statement">
+					Alaiya envisions a world in which interconnected challenges are approached with the systems-level thinking, 
+					cross-sector collaboration, and long-term perspective they require. 
+					It is grounded in the 
+					belief that change does not always require a single novel and transformative solution. 
+					Thoughtful and practical work that recognizes the connection between people, places, policies, 
+					and the environment can have lasting effects when they contribute to a broader vision of a more 
+				sustainable and equitable world. 
 
+				</p>
+				<p class="label">MISSION</p>
+				<p class="statement">
+					Alaiya helps organizations address global challenges through systems thinking and 
+					interdisciplinary research. Combining data analysis, geospatial intelligence, 
+					policy research, and impact communications, Alaiya connects technical evidence with the 
+					broader social, environmental, and economic contexts in which problems arise. Example sectors that Alaiya operates in include climate, waste, water, urban design, public health, and education. Clients range from local and national entities to international organizations. 
+				</p>
+			</section>
+		</main>
+
+		<PlusMenu />
 		<div id="backdrop" class="backdrop"></div>
 
-		<aside id="panel-about" class="panel">
-			<button class="panel-close" aria-label="Close">&times;</button>
-			<div class="photo" style="background-image: url('/me.png');"></div>
-			<p>I’m a freelance contractor with 10 years of experience across climate and development.
-            I started Alaiya Collective as a way to bring together my experience in data, research,
-            policy, and communications. </p>
-            <p>My background spans architecture, international economics and policy, climate and energy sustainability, and GIS data analysis.
-            My work spans everything from GIS visualizations of survey data to video editing and environmental policy analysis. 
-            I specialize in circular economy and waste systems, with a particular interest in understanding alpine waste management relationships.
-            On the side, I enjoy experimenting with film photography, visual story-telling and marathoning.</p> 
-            <p>Feel free to drop me a line if any of my work sparks an interest! </p>
-			<a href="/cv" class="box">VIEW MY CV</a>
+		<button class="tab" data-panel="about" aria-expanded="false" style="top: 7rem;">TEAM</button>
+		<button class="tab" data-panel="projects" aria-expanded="false" style="top: 14.5rem;">WHAT WE DO</button>
+
+		<aside id="panel-about" class="panel" aria-label="about">
+			<div class="about-grid">
+				<img src="/me.png" alt="Meghan Hale" class="photo" />
+				<div>
+					<p>
+						Alaiya Collective was founded by Meghan Hale with the vision of bringing together expertise in data, research, policy, and communications to create a more collective understanding of interconnected global challenges. Its work is grounded in systems-level thinking, cross-sector collaboration, and long-term vision.
+					</p>
+					<p>
+						Meghan has a background in architecture and international development, with 10 years of experience across GIS/data analysis, economics and policy, environmental sustainability, and visual storytelling. Her work spans everything from GIS visualizations of survey data to video editing and environmental policy analysis.
+					</p>
+					<p>
+						Specializing in circular economy and waste systems, Meghan has a particular interest in understanding alpine waste management relationships. On the side, she enjoys experimenting with film photography, visual story-telling and marathoning.
+					</p>
+					<p>Feel free to drop us a line if any of our work sparks an interest!</p>
+					<a href="/about" class="box">VIEW CV</a>
+				</div>
+			</div>
 		</aside>
 
-		<aside id="panel-projects" class="panel">
-			<button class="panel-close" aria-label="Close">&times;</button>
-			<p>Research, data, and mapping work across climate, sustainability, and international development. The map shows where I've worked and what I did there.</p>
-			<a href="/map" class="box">OPEN THE MAP</a>
+		<aside id="panel-projects" class="panel" aria-label="What we do">
+			<div class="proj-top">
+				<p>
+					Alaiya provides custom research, data analysis, geospatial intelligence, and impact communications to organizations working in climate, sustainability, and international development. Combining technical knowledge with structured analysis, we address challenges in climate change, the circular economy, waste management, and water resources, delivering everything from data visualizations and policy recommendations to communication strategy and project management.
+				</p>
+				<p>
+					Alaiya partners with decision-makers across public and private sectors, including NGOs, multilaterals, communities, academic institutions, and donors.
+				</p>
+			</div>
+			<p class="eg">Example services include</p>
+			<div class="svc">
+				{services.map((s) => (
+					<p><i>{s.title}</i><br />{s.text}</p>
+				))}
+			</div>
+			<div class="proj-foot">
+				<p>Explore our project map to see where we've worked and what we did there.</p>
+				<a href="/projects" class="box">OPEN THE MAP</a>
+			</div>
 		</aside>
 
-		<aside id="panel-contact" class="panel">
-	<button class="panel-close" aria-label="Close">&times;</button>
-	<p>Working on something in climate, sustainability, or development? Tell me a bit about it and I'll get back to you.</p>
-
-	<form id="contact-form" class="form">
-		<input type="hidden" name="access_key" value="4bc5d65e-3f21-48f2-b86a-41c351cfed71" />
-		<input type="hidden" name="subject" value="New message from alaiyacollective.com" />
-		<input type="hidden" name="from_name" value="Alaiya Development Collective website" />
-		<input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
-
-		<label>YOUR NAME<input type="text" name="name" required /></label>
-		<label>YOUR EMAIL<input type="email" name="email" required /></label>
-		<label>MESSAGE<textarea name="message" rows="5" required></textarea></label>
-
-		<button type="submit" class="box" id="send">SEND</button>
-		<p id="form-status" class="status" role="status"></p>
-	</form>
-
-	<p class="alt">Prefer email? <a href="mailto:meghan@alaiyacollective.com" class="inline">meghan@alaiyacollective.com</a></p>
-</aside>
+		<Footer />
 
 		<script>
 			const panels = document.querySelectorAll('.panel');
+			const tabs = document.querySelectorAll('.tab');
 			const backdrop = document.getElementById('backdrop');
-			const menu = document.getElementById('menu');
-			const plus = document.getElementById('plus');
 
-			function closeMenu() {
-				menu.classList.remove('open');
-				plus.textContent = '+';
-				plus.setAttribute('aria-expanded', 'false');
-			}
 			function closeAll() {
 				panels.forEach((p) => p.classList.remove('open'));
+				tabs.forEach((t) => t.setAttribute('aria-expanded', 'false'));
 				backdrop.classList.remove('show');
 			}
 			function openPanel(name) {
 				closeAll();
-				closeMenu();
 				const p = document.getElementById('panel-' + name);
-				if (p) {
-					p.classList.add('open');
-					backdrop.classList.add('show');
-				}
+				if (!p) return;
+				p.classList.add('open');
+				document.querySelector('.tab[data-panel="' + name + '"]').setAttribute('aria-expanded', 'true');
+				backdrop.classList.add('show');
 			}
 
-			document.querySelectorAll('[data-panel]').forEach((a) => {
-				a.addEventListener('click', (e) => {
-					e.preventDefault();
-					openPanel(a.dataset.panel);
+			tabs.forEach((t) => {
+				t.addEventListener('click', () => {
+					const p = document.getElementById('panel-' + t.dataset.panel);
+					if (p.classList.contains('open')) closeAll();
+					else openPanel(t.dataset.panel);
 				});
 			});
-			document.querySelectorAll('.panel-close').forEach((b) => b.addEventListener('click', closeAll));
 			backdrop.addEventListener('click', closeAll);
-
-            function openFromHash() {
-	const name = window.location.hash.replace('#', '');
-	if (['about', 'projects', 'contact'].includes(name)) openPanel(name);
-}
-openFromHash();
-window.addEventListener('hashchange', openFromHash);
-
-			plus.addEventListener('click', () => {
-				const open = menu.classList.toggle('open');
-				plus.textContent = open ? '\u00d7' : '+';
-				plus.setAttribute('aria-expanded', String(open));
-			});
-			document.addEventListener('click', (e) => {
-				if (!menu.contains(e.target) && e.target !== plus) closeMenu();
-			});
 			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape') {
-					closeAll();
-					closeMenu();
-				}
+				if (e.key === 'Escape') closeAll();
 			});
 
-            const form = document.getElementById('contact-form');
-const statusEl = document.getElementById('form-status');
-const sendBtn = document.getElementById('send');
-if (form) {
-	form.addEventListener('submit', async (e) => {
-		e.preventDefault();
-		sendBtn.disabled = true;
-		statusEl.textContent = 'Sending...';
-		try {
-			const data = Object.fromEntries(new FormData(form));
-			const res = await fetch('https://api.web3forms.com/submit', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-				body: JSON.stringify(data),
-			});
-			const result = await res.json();
-			if (result.success) {
-				form.reset();
-				statusEl.textContent = 'Thanks, your message is on its way.';
-			} else {
-				statusEl.textContent = 'Something went wrong. Please email me directly instead.';
+			function openFromHash() {
+				const name = window.location.hash.replace('#', '');
+				if (['about', 'projects'].includes(name)) openPanel(name);
 			}
-		} catch (err) {
-			statusEl.textContent = 'Something went wrong. Please email me directly instead.';
-		}
-		sendBtn.disabled = false;
-	});
-}
+			openFromHash();
+			window.addEventListener('hashchange', openFromHash);
+
+			// Flip cards
+			document.querySelectorAll('.card').forEach((c) => {
+				c.addEventListener('click', () => {
+					const flipped = c.classList.toggle('flipped');
+					c.setAttribute('aria-pressed', String(flipped));
+				});
+			});
 		</script>
-		<Footer />
 	</body>
 </html>
 
 <style>
+	:global(html) {
+		scrollbar-width: none;
+	}
+	:global(html::-webkit-scrollbar) {
+		display: none;
+	}
 	:global(html),
 	:global(body) {
 		margin: 0;
 		padding: 0;
-		/*overflow: hidden;*/
 		background: white;
-		font-family: 'Inter', sans-serif;
+		font-family: 'Noto Serif', serif;
 	}
-	.shell {
+
+	/* First screen */
+	.first {
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
@@ -193,15 +212,95 @@ if (form) {
 		grid-template-rows: repeat(2, 1fr);
 		gap: 12px;
 		padding: 12px;
-		width: auto;
-		max-width: none;
 	}
-	.photo-cell {
+
+	/* Flip cards */
+	.card {
+		display: block;
+		width: 100%;
+		height: 100%;
 		min-height: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: none;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+		perspective: 1200px;
+	}
+	.card-inner {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		transition: transform 0.6s ease;
+		transform-style: preserve-3d;
+	}
+	.card:not(.flipped):hover .card-inner {
+		transform: rotateY(10deg);
+	}
+	.card.flipped .card-inner {
+		transform: rotateY(180deg);
+	}
+	.face {
+		position: absolute;
+		inset: 0;
+		display: block;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+	}
+	.front {
+		background-color: #e6e6e1;
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
-		border-radius: 0;
+	}
+	.back {
+		transform: rotateY(180deg);
+		box-sizing: border-box;
+		background: #304334;
+		color: white;
+		padding: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		gap: 0.6rem;
+	}
+	.back-place {
+		font-family: 'Inter', sans-serif;
+		font-size: 0.65rem;
+		font-weight: 600;
+		letter-spacing: 0.15em;
+	}
+	.back-text {
+		font-size: 0.85rem;
+		line-height: 1.5;
+	}
+	.flip-badge {
+		position: absolute;
+		right: 0.7rem;
+		bottom: 0.7rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		background: white;
+		color: #111;
+		font-family: 'Inter', sans-serif;
+		font-size: 0.6rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		padding: 0.35rem 0.55rem;
+	}
+	.back .flip-badge {
+		top: 0.7rem;
+		bottom: auto;
+		background: rgba(255, 255, 255, 0.15);
+		color: white;
+	}
+	.card:focus-visible {
+		outline: 2px solid #111;
+		outline-offset: 2px;
 	}
 
 	.side-text {
@@ -212,6 +311,14 @@ if (form) {
 		padding: 0.5rem 0.5rem 0.5rem 1rem;
 		color: #111;
 		overflow: hidden;
+	}
+	.hint {
+		margin: 0 0 auto;
+		font-family: 'Inter', sans-serif;
+		font-size: 0.6rem;
+		font-weight: 600;
+		letter-spacing: 0.15em;
+		color: #666;
 	}
 	.kicker {
 		font-size: 0.7rem;
@@ -232,6 +339,36 @@ if (form) {
 		margin: 0;
 	}
 
+	/* Vision and mission. The fourth number in the padding is the space on the left. */
+	.rest {
+		width: 100%;
+		max-width: none;
+		margin: 0;
+		padding: 0;
+	}
+	.block {
+		max-width: none;
+		margin: 0;
+		padding: 5rem 2rem 4rem 2.75rem;
+		box-sizing: border-box;
+		color: #111;
+	}
+	.label {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		margin: 0 0 1.5rem;
+	}
+	.statement {
+		max-width: 1500px;
+		font-size: clamp(1rem, 3vw, 2rem);
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		line-height: 1.25;
+		color: #111;
+		margin: 0 0 4.5rem;
+	}
+
 	.box {
 		display: inline-block;
 		background: white;
@@ -245,52 +382,6 @@ if (form) {
 		cursor: pointer;
 	}
 
-	.plus {
-		position: fixed;
-		top: 0.9rem;
-		right: 1.5rem;
-		z-index: 60;
-		width: 2.5rem;
-		height: 2.5rem;
-		display: grid;
-		place-items: center;
-		background: none;
-		color: #111;
-		border: none;
-		font-family: 'Inter', sans-serif;
-		font-size: 2rem;
-		font-weight: 300;
-		line-height: 1;
-		cursor: pointer;
-		padding: 0;
-	}
-	.menu {
-		position: fixed;
-		top: 3.4rem;
-		right: 1.5rem;
-		z-index: 60;
-		min-width: 180px;
-		background: white;
-		border: 1px solid #111;
-		padding: 0.4rem 0;
-		display: none;
-	}
-	.menu.open {
-		display: block;
-	}
-	.menu a {
-		display: block;
-		padding: 0.55rem 1rem;
-		color: #111;
-		font-size: 0.7rem;
-		font-weight: 600;
-		letter-spacing: 0.08em;
-		text-decoration: none;
-	}
-	.menu a:hover {
-		background: #f0f0f0;
-	}
-
 	.backdrop {
 		position: fixed;
 		inset: 0;
@@ -300,123 +391,163 @@ if (form) {
 	.backdrop.show {
 		display: block;
 	}
+
+	/* Tabs stay on the left edge of the screen */
+	.tab {
+		position: fixed;
+		left: 0;
+		z-index: 56;
+		width: 2.2rem;
+		min-height: 6rem;
+		display: grid;
+		place-items: center;
+		background: #304334;
+		color: white;
+		border: none;
+		border-radius: 0 8px 8px 0;
+		writing-mode: vertical-rl;
+		font-family: 'Inter', sans-serif;
+		font-size: 0.65rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		cursor: pointer;
+		padding: 1.1rem 0;
+	}
+	.tab:hover {
+		background: #3b5340;
+	}
+	.tab[aria-expanded='true'] {
+		background: #1d2b21;
+	}
+
+	/* Panels float beside the tabs. Each one is as tall as its content. */
 	.panel {
 		position: fixed;
 		z-index: 50;
 		top: 5rem;
-		right: 1rem;
-		bottom: 1rem;
-		width: min(540px, calc(100vw - 2rem));
+		left: 3.5rem;
 		box-sizing: border-box;
 		background: #304334;
 		color: white;
 		border-radius: 18px;
-		padding: 3rem 2.5rem 2.5rem;
+		padding: 2.5rem;
+		max-height: calc(100svh - 7rem);
 		overflow-y: auto;
-		transform: translateX(120%);
-		transition: transform 0.35s ease;
+		scrollbar-width: none;
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transform: translateX(-14px);
+		transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+	}
+	.panel::-webkit-scrollbar {
+		display: none;
 	}
 	.panel.open {
-		transform: translateX(0);
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		transform: none;
+		transition-delay: 0s;
+		z-index: 55;
 	}
+	#panel-about {
+	width: min(620px, calc(100vw - 5rem));
+}
+	#panel-projects {
+		width: min(920px, calc(100vw - 5rem));
+	}
+
 	.panel p {
 		font-size: 0.8rem;
 		line-height: 1.5;
-		margin: 0 0 1.25rem;
-	}
-	.panel .inline {
-		color: white;
-		text-decoration: underline;
-	}
-	.panel-close {
-		position: absolute;
-		top: 1rem;
-		right: 1.25rem;
-		background: none;
-		border: none;
-		color: white;
-		font-size: 2rem;
-		line-height: 1;
-		cursor: pointer;
-	}
-	.photo {
-		width: 100%;
-		aspect-ratio: 4 / 3;
-		background-color: rgba(255, 255, 255, 0.12);
-		background-size: cover;
-		background-position: center;
-		border-radius: 12px;
-		margin-bottom: 1.5rem;
-	}
-	.row {
-		display: flex;
-		gap: 0.75rem;
-		flex-wrap: wrap;
+		margin: 0 0 1.1rem;
 	}
 
-    .form {
-	display: flex;
-	flex-direction: column;
-	gap: 1.25rem;
-	margin-top: 1.5rem;
+	.about-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
 }
-.form label {
-	display: block;
-	font-size: 0.7rem;
-	font-weight: 600;
-	letter-spacing: 0.1em;
-}
-.form input[type='text'],
-.form input[type='email'],
-.form textarea {
+	.photo {
 	display: block;
 	width: 100%;
-	box-sizing: border-box;
-	background: rgba(255, 255, 255, 0.12);
-	border: 1px solid rgba(255, 255, 255, 0.7);
-	border-radius: 6px;
-	color: white;
-	font-family: 'Inter', sans-serif;
-	font-size: 1rem;
-	padding: 0.75rem 0.9rem;
-	margin-top: 0.4rem;
-	outline: none;
-	resize: none;
-}
-.form input:focus,
-.form textarea:focus {
-	background: rgba(255, 255, 255, 0.2);
-	border-color: white;
-}
-.form .box {
-	align-self: flex-start;
-}
-.hp {
-	display: none;
-}
-.panel .status {
-	font-size: 0.9rem;
-	margin: 0;
-	min-height: 1.2em;
-}
-.panel .alt {
-	font-size: 0.9rem;
-	margin: 1.5rem 0 0;
+	height: auto;
+	max-height: 22rem;
+	object-fit: contain;
+	border-radius: 12px;
 }
 
+	.proj-top {
+		display: grid;
+		grid-template-columns: 1.3fr 1fr;
+		gap: 2rem;
+	}
+	.panel .eg {
+		font-weight: 600;
+		margin: 0.25rem 0 1rem;
+	}
+	.svc {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0 1.75rem;
+	}
+	.panel .svc p {
+		margin: 0 0 1rem;
+	}
+	.proj-foot {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+	}
+	.panel .proj-foot p {
+		margin: 0;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.card-inner {
+			transition: none;
+		}
+		.card:not(.flipped):hover .card-inner {
+			transform: none;
+		}
+		.panel {
+			transition: none;
+		}
+	}
 	@media (max-width: 700px) {
 		.stage {
 			grid-template-columns: repeat(2, 1fr);
 			grid-template-rows: repeat(3, 1fr);
 		}
-		.photo-cell:first-child {
+		.card:first-child {
 			grid-column: 1 / -1;
 		}
 		.side-text {
 			display: none;
 		}
+		.tab {
+			width: 1.9rem;
+			font-size: 0.6rem;
+		}
 		.panel {
-			top: 4.5rem;
+			left: 2.6rem;
+			padding: 2.5rem 1.5rem 2rem;
+		}
+		#panel-about,
+		#panel-projects {
+			width: calc(100vw - 3.6rem);
+		}
+		.about-grid,
+		.proj-top,
+		.svc {
+			grid-template-columns: 1fr;
+		}
+		
+		}
+		.block {
+			padding: 3.5rem 1.25rem 2.5rem 2.75rem;
 		}
 	}
 </style>

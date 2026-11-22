@@ -1,0 +1,345 @@
+---
+// src/pages/map.astro
+import 'leaflet/dist/leaflet.css';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PlusMenu from '../components/PlusMenu.astro';
+
+interface Project {
+  id: string;
+  title: string;
+  location: string;
+  coords: [number, number];
+  categories: string[]; // e.g. ["water", "policy"]
+  summary: string;
+  link?: string;
+}
+
+const projects: Project[] = [
+  {
+    id: "nepal-project",
+    title: "Independent Waste Management Research",
+    location: "Langtang Valley, Nepal",
+    coords: [28.1611, 85.3476],
+    categories: ["waste management", "circular economy", "policy"],
+    summary: "Independent research on waste management along a major Himalayan hiking route. This project aims to identify sustainable solutions for waste reduction and resource recovery in the region.",
+    link: ""
+  },
+  {
+    id: "brazil-project",
+    title: "Reimagining the Igarape",
+    location: "Manaus,Brazil",
+    coords: [-3.1190, -60.0217],
+    categories: ["water"],
+    summary: "",
+    link: ""
+  },
+  {
+    id: "us-project",
+    title: "U.S. Lettuce Markets",
+    location: "California, USA",
+    coords: [36.45, -121.38],
+    categories: ["policy"],
+    summary: "Research on the U.S. lettuce markets, focusing on the economic and environmental impacts of production and distribution. This project seeks to inform policy decisions and promote sustainable agricultural practices.",
+    link: "https://s.giannini.ucop.edu/uploads/pub/2026/10/29/v30n1_VQioV1y.pdf"
+  },
+  {
+    id: "india-project",
+    title: "Bamboo School Construction",
+    location: "Jorhat, India",
+    coords: [26.75, 94.22],
+    categories: ["education", "NbS"],
+    summary: "",
+    link: ""
+  }
+];
+
+const initialCenter: [number, number] = [20, 10];
+const initialZoom = 2;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Map" description="Global map of projects" />
+  </head>
+  <body class="map-body">
+    <Header />
+<PlusMenu />
+    <main class="map-page">
+      <!-- Top-left overlay: tiny title + filter bar -->
+      <div class="map-controls">
+        <span class="tiny-title">Project Map</span>
+        <div class="filter-bar" role="group" aria-label="Filter projects">
+          <button type="button" class="filter-btn is-active" data-filter="all">
+            --all--
+          </button>
+          <!-- Future category buttons can be added here, e.g.:
+          <button type="button" class="filter-btn" data-filter="water">water</button>
+          <button type="button" class="filter-btn" data-filter="waste management">waste management</button>
+          <button type="button" class="filter-btn" data-filter="policy">policy</button>
+          <button type="button" class="filter-btn" data-filter="education">education</button>
+          <button type="button" class="filter-btn" data-filter="NbS">NbS</button>
+          -->
+        </div>
+      </div>
+
+      <!-- Top-right overlay: reset back to full world view -->
+      <button type="button" id="reset-view-btn" class="map-reset-btn">
+        Full View
+      </button>
+
+      <div
+        id="project-map"
+        data-projects={JSON.stringify(projects)}
+        data-center={JSON.stringify(initialCenter)}
+        data-zoom={initialZoom}
+      ></div>
+    </main>
+
+    <Footer />
+
+    <style>
+      html,
+      body.map-body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      main.map-page {
+        position: relative;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        height: calc(100dvh - 72px); /* Adjust 72px if your Header is taller/shorter */
+        min-height: 480px;
+      }
+
+      .map-controls,
+      .map-reset-btn {
+        position: absolute;
+        top: 12px;
+        z-index: 500;
+        background: rgba(255, 255, 255, 0.78);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        padding: 4px 8px;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .map-controls {
+        left: 54px; /* Clears Leaflet's +/- zoom buttons */
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .map-reset-btn {
+        right: 12px;
+        font-size: 0.75rem;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #1f2937;
+        cursor: pointer;
+      }
+
+      .map-reset-btn:hover {
+        background: rgba(255, 255, 255, 0.94);
+      }
+
+      .tiny-title {
+        font-size: 0.75rem;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #1f2937;
+      }
+
+      .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .filter-btn {
+        font-size: 0.75rem;
+        line-height: 1;
+        padding: 3px 7px;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 0, 0, 0.14);
+        background: rgba(255, 255, 255, 0.85);
+        color: #1f2937;
+        cursor: pointer;
+      }
+
+      .filter-btn.is-active {
+        background: #111827;
+        color: #ffffff;
+        border-color: #111827;
+      }
+
+      #project-map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        z-index: 1;
+      }
+
+      :global(.project-dot) {
+        cursor: pointer;
+      }
+
+      :global(.map-popup) {
+        min-width: 180px;
+        max-width: 260px;
+      }
+      :global(.map-popup .popup-meta) {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #555;
+        margin-bottom: 2px;
+      }
+      :global(.map-popup h3) {
+        margin: 0 0 6px 0;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #111;
+      }
+      :global(.map-popup p) {
+        margin: 0 0 8px 0;
+        font-size: 0.88rem;
+        line-height: 1.4;
+        color: #333;
+      }
+      :global(.map-popup a) {
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: underline;
+      }
+    </style>
+
+    <script>
+      import L from 'leaflet';
+
+      function initMap() {
+        const el = document.getElementById('project-map');
+        if (!el || el.hasAttribute('data-initialized')) return;
+        el.setAttribute('data-initialized', 'true');
+
+        const projects = JSON.parse(el.dataset.projects || '[]');
+        const initialCenter: [number, number] = JSON.parse(el.dataset.center || '[20, 10]');
+        const initialZoom = Number(el.dataset.zoom || 2);
+        const dotClickZoom = 8; // Adjust higher/lower for how close clicking a dot zooms in
+
+        const map = L.map('project-map', {
+          minZoom: 2,
+          maxZoom: 19,
+          worldCopyJump: true,
+          scrollWheelZoom: false,
+        }).setView(initialCenter, initialZoom);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          minZoom: 2,
+          maxZoom: 19,
+          noWrap: false,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        // Prevent +/- zoom buttons from stealing focus and causing page scroll
+        const container = map.getContainer();
+        container.querySelectorAll('.leaflet-control-zoom a').forEach((btn) => {
+          btn.addEventListener('mousedown', (e) => e.preventDefault());
+          btn.addEventListener('click', () => (btn as HTMLElement).blur());
+        });
+
+        const markerLayer = L.layerGroup().addTo(map);
+
+        function renderDots(activeFilter: string) {
+          markerLayer.clearLayers();
+
+          const filtered =
+            activeFilter === 'all'
+              ? projects
+              : projects.filter((p: any) =>
+                  Array.isArray(p.categories) && p.categories.includes(activeFilter)
+                );
+
+          for (const project of filtered) {
+            const dot = L.circleMarker(project.coords, {
+              radius: 5,
+              color: 'rgb(0, 0, 0)',
+              weight: 2,
+              fillColor: 'rgb(100, 100, 100)',
+              fillOpacity: 0.9,
+              className: 'project-dot',
+            });
+
+            const categoriesText = Array.isArray(project.categories)
+              ? project.categories.join(' · ')
+              : '';
+
+            const linkHtml = project.link
+              ? `<a href="${project.link}">Read more →</a>`
+              : '';
+
+            dot.bindPopup(`
+              <div class="map-popup">
+                <div class="popup-meta">${project.location}${categoriesText ? ` • ${categoriesText}` : ''}</div>
+                <h3>${project.title}</h3>
+                <p>${project.summary}</p>
+                ${linkHtml}
+              </div>
+            `);
+
+            dot.on('click', () => {
+              map.flyTo(project.coords, Math.max(map.getZoom(), dotClickZoom), {
+                duration: 0.6,
+              });
+              dot.openPopup();
+            });
+
+            dot.addTo(markerLayer);
+          }
+        }
+
+        renderDots('all');
+
+        // Top-right button: return to full world summary view
+        const resetBtn = document.getElementById('reset-view-btn') as HTMLButtonElement | null;
+        resetBtn?.addEventListener('click', () => {
+          map.closePopup();
+          map.flyTo(initialCenter, initialZoom, { duration: 0.6 });
+          resetBtn.blur();
+        });
+
+        // Wire up filter buttons
+        const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+        buttons.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const filter = btn.dataset.filter || 'all';
+            buttons.forEach((b) => b.classList.remove('is-active'));
+            btn.classList.add('is-active');
+            renderDots(filter);
+          });
+        });
+
+        setTimeout(() => map.invalidateSize(), 0);
+      }
+
+      initMap();
+      document.addEventListener('astro:after-swap', initMap);
+    </script>
+  </body>
+</html>
